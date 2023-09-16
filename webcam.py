@@ -1,19 +1,12 @@
-from roboflow import Roboflow
-rf = Roboflow(api_key="eurWhLwiwz1glktp3OqT")
-project = rf.workspace("roboflow-58fyf").project("rock-paper-scissors-sxsw")
-dataset = project.version(12).download("yolov7")
-
-import cv2 
-
+import cv2
 
 # Get the webcam
 cap = cv2.VideoCapture(0)
 
-
 # Check if the webcam is opened
 if not cap.isOpened():
-  print("Error opening webcam")
-  exit()
+    print("Error opening webcam")
+    exit()
 
 # Get the frame size
 frame_width = int(cap.get(3))
@@ -22,22 +15,27 @@ frame_height = int(cap.get(4))
 # Create a window to display the webcam feed
 cv2.namedWindow("Webcam")
 
+# Flag to indicate whether the user wants to quit
+quit_requested = False
+
 # Start a loop to capture frames from the webcam
-while True:
-  # Capture the frame
-  ret, frame = cap.read()
+while not quit_requested:
+    # Capture the frame
+    ret, frame = cap.read()
 
-  # If the frame was not captured, break the loop
-  if not ret:
-    break
+    # If the frame was not captured, break the loop
+    if not ret:
+        break
 
-  # Display the frame
-  cv2.imshow("Webcam", frame)
+    # Display the frame
+    cv2.imshow("Webcam", frame)
 
-  # If the key is `q`, break the loop
-  user_input = input("press q to quit")
-  if user_input == 'q':
-    break
+    # Check for user input
+    key = cv2.waitKey(1)
+
+    # If the key is 'q', set the quit flag to True
+    if key == ord('q'):
+        quit_requested = True
 
 # Release the webcam
 cap.release()
