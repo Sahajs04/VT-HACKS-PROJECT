@@ -10,8 +10,6 @@ if not cap.isOpened():
 
 # Get the frame size
 frame_width = int(cap.get(3))
-frame_height = int(cap.get(4))
-
 # Create a window to display the webcam feed
 cv2.namedWindow("Webcam")
 
@@ -31,7 +29,7 @@ while not quit_requested:
     cv2.imshow("Webcam", frame)
 
     # Check for user input
-    key = cv2.waitKey(1)
+    key = cv2.waitKey(10)
 
     # If the key is 'q', set the quit flag to True
     if key == ord('q'):
@@ -39,6 +37,3 @@ while not quit_requested:
 
 # Release the webcam
 cap.release()
-
-# Close the window
-cv2.destroyAllWindows()
