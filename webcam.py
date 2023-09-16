@@ -34,9 +34,6 @@ while True:
   # Display the frame
   cv2.imshow("Webcam", frame)
 
-  # Wait for a key press
-  key = cv2.waitKey(1)
-
   # If the key is `q`, break the loop
   user_input = input("press q to quit")
   if user_input == 'q':
