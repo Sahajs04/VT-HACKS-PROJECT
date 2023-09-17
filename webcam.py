@@ -1,5 +1,9 @@
 from roboflow import Roboflow
 import cv2
+import spotipy
+import sys
+import spotipy.util as util
+from spotipy.oauth2 import SpotifyOAuth, SpotifyClientCredentials
 rf = Roboflow(api_key="sKsQzha8jrnm9Onvmp6p")
 project = rf.workspace().project("rock-paper-scissors-sxsw")
 model = project.version(11).model
@@ -47,7 +51,23 @@ while(cap.isOpened()):
             detection_results = bounding_box
             class_and_confidence = (class_name, confidence_score)
             print(class_and_confidence, '\n')
-          
+            if class_name == "Rock":
+                scope = 'user-read-playback-state user-modify-playback-state'
+                lz_uri = 'spotify:artist:36QJpDe2go2KgaRleHCDTp'
+                sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id= "4d502f92f4834f4483913b53415b4e24", client_secret= "4b050805c79940aeb6fc5d84eab88ba2", redirect_uri= "https://localhost:8888/callback", scope = "user-read-playback-state user-modify-playback-state"))
+                sp.pause_playback()
+            elif class_name == "Paper":
+                scope = 'user-read-playback-state user-modify-playback-state'
+                lz_uri = 'spotify:artist:36QJpDe2go2KgaRleHCDTp'
+                sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id= "4d502f92f4834f4483913b53415b4e24", client_secret= "4b050805c79940aeb6fc5d84eab88ba2", redirect_uri= "https://localhost:8888/callback", scope = "user-read-playback-state user-modify-playback-state"))
+                sp.start_playback()
+            elif class_name == "Scissors":
+                scope = 'user-read-playback-state user-modify-playback-state'
+                lz_uri = 'spotify:artist:36QJpDe2go2KgaRleHCDTp'
+                sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id= "4d502f92f4834f4483913b53415b4e24", client_secret= "4b050805c79940aeb6fc5d84eab88ba2", redirect_uri= "https://localhost:8888/callback", scope = "user-read-playback-state user-modify-playback-state"))
+                sp.next_track()
+        
+        
 
     if cv2.waitKey(1000) == ord('q'):
         break
